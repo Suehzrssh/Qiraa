@@ -89,8 +89,13 @@ export default function Reader({
             ← Back to chapters
           </button>
 
-          <h2>{selectedChapter.title}</h2>
-          <p>{selectedChapter.content}</p>
+          <h2 className="text-center uppercase">{selectedChapter.title}</h2>
+          
+          {selectedChapter.content
+              ?.split(/\n\s*\n/)
+              .map((para, index) => (
+              <p className="mb-4 indent-8 leading-relaxed text-justify" key={index}>{para}</p>
+            ))}
         </article>
       )}
     </section>

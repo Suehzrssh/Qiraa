@@ -6,32 +6,32 @@ const api = axios.create({
 
 // genres
 export const fetchGenres = async () => {
-  const res = await api.get("/genres");
+  const res = await api.get("/api/genres");
   return res.data;
 };
 
 // books by genre (if backend supports it)
 export const fetchBooks = async () => {
-  const res = await api.get("/books");
+  const res = await api.get("/api/books");
   return res.data;
 };
 
 // one book
 export const fetchBook = async (bookId) => {
-  const res = await api.get(`/books/${bookId}`);
+  const res = await api.get(`/api/books/${bookId}`);
   return res.data;
 };
 
 // chapters of a book
 export const fetchChapters = async (bookId) => {
-  const res = await api.get(`/books/${bookId}/chapters`);
+  const res = await api.get(`/api/books/${bookId}/chapters`);
   return res.data;
 };
 
 // one chapter
 export const fetchChapter = async (bookId, chapterId) => {
   const res = await api.get(
-    `/books/${bookId}/chapters/${chapterId}`
+    `/api/books/${bookId}/chapters/${chapterId}`
   );
   return res.data;
 };

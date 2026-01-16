@@ -9,6 +9,7 @@ use axum::http::Method;
 use http::header::HeaderValue;
 use sqlx::PgPool;
 use std::env;
+use std::net::SocketAddr;
 use tower_http::cors::{AllowMethods, Any, CorsLayer};
 
 #[tokio::main]
@@ -26,13 +27,12 @@ async fn main() {
 
     // CORS
     let cors = CorsLayer::new()
-        .allow_origin("http://localhost:5173".parse::<HeaderValue>().unwrap())
-        .allow_methods(AllowMethods::list([
-            Method::GET,
-            Method::POST,
-            Method::DELETE,
-        ]))
-        .allow_headers(Any);
+  .allow_origin([
+    "http://localhost:5173".parse().unwrap(),
+    "https://reading-qiraa.netlify.app".parse().unwrap(),
+  ])
+  .allow_methods(Any)
+  .allow_headers(Any);
 
     // App
     let app = Router::new()
@@ -45,9 +45,16 @@ async fn main() {
         .layer(cors);
 
     // Server
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
-        .await
-        .expect("Failed to bind address");
+    let port = std::env::var("PORT")
+    .unwrap_or("3000".to_string())
+    .parse::<u16>()
+    .expect("PORT must be a number");
+
+    let addr = SocketAddr::from(([0, 0, 0, 0], port));
+
+    let listener = tokio::net::TcpListener::bind(addr)
+    .await
+    .expect("Failed to bind address");
 
     axum::serve(listener, app)
         .await
