@@ -29,7 +29,7 @@ async fn main() {
     let cors = CorsLayer::new()
   .allow_origin([
     "http://localhost:5173".parse().unwrap(),
-    "https://reading-qiraa.netlify.app".parse().unwrap(),
+    "http://192.168.1.103:5173".parse().unwrap(),
   ])
   .allow_methods(Any)
   .allow_headers(Any);
