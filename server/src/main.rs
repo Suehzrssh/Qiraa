@@ -5,12 +5,11 @@ use axum::{
     routing::get,
     Router,
 };
-use axum::http::Method;
-use http::header::HeaderValue;
+
 use sqlx::PgPool;
 use std::env;
 use std::net::SocketAddr;
-use tower_http::cors::{AllowMethods, Any, CorsLayer};
+use tower_http::cors::{Any, CorsLayer};
 
 #[tokio::main]
 async fn main() {
@@ -27,10 +26,7 @@ async fn main() {
 
     // CORS
     let cors = CorsLayer::new()
-  .allow_origin([
-    "http://localhost:5173".parse().unwrap(),
-    "http://192.168.1.103:5173".parse().unwrap(),
-  ])
+  .allow_origin(Any)
   .allow_methods(Any)
   .allow_headers(Any);
 
