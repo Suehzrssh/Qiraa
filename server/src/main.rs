@@ -1,3 +1,6 @@
+#[cfg(feature = "sqlx-offline")]
+const _: () = ();
+
 mod handlers;
 mod routes;
 
